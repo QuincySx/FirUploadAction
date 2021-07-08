@@ -1,0 +1,22 @@
+name: 'Upload Fir.im File'
+description: 'Upload the file to fir.im'
+author: 'QuincySx'
+inputs:
+  api-token:
+    description: 'Account token for fir.im'
+    required: true
+  upload_file_path:
+    description: 'The path to the uploaded file'
+    required: true
+  upload_file_type:
+    description: 'android or ios : Upload the type'
+    required: true
+  ios_release_type:
+    description: 'Adhoc or Inhouse : IOS packaging type'
+    required: true
+  upload_bundle_id:
+    description: 'First release application fill out'
+    required: false
+  changelog:
+    description: 'change log'
+    required: false
