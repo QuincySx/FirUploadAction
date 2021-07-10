@@ -13,8 +13,8 @@ jobs:
     
     steps:
     - name: Use upload firim
-    - id: firim
       uses: OneKeyHQ/onekey-github-actions/upload-artifact-firim@13ff4523e739fe4e8dec664237a5a6905bf61ea6
+      id: firim
       with:
         api-token: ${{ secrets.FIRIM_TOKEN }}
         upload-file-path: https://ugc-download.firqr.com/f07bf2d92148481fd78575939752a2821b63ac35?auth_key=1625880071-0-0-668477d9f97d8248adf341438dfa65b7
