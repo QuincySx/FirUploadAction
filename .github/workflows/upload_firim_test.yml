@@ -13,7 +13,7 @@ jobs:
     
     steps:
     - name: Use upload firim
-      uses: OneKeyHQ/onekey-github-actions/upload-artifact-firim@431eab394283a7d540132c9859f0c43a091526db
+      uses: OneKeyHQ/onekey-github-actions/upload-artifact-firim@c9a039e798b1678706a1e6196637317578f57d6c
       id: firim
       with:
         api-token: ${{ secrets.FIRIM_TOKEN }}
