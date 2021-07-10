@@ -12,12 +12,18 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - name: Download a file
+      uses: carlosperate/download-file-action@v1.0.3
+      id: download-poetry
+      with:
+        file-url: 'https://ugc-download.firqr.com/89615ac01939aff8b724cb7e3c482aefcab10534.apk?auth_key=1625925203-0-0-cfbbee11785125201877ee152eb86929'
+        file-name: '1.apk'
     - name: Use upload firim
-      uses: OneKeyHQ/onekey-github-actions/upload-artifact-firim@c9a039e798b1678706a1e6196637317578f57d6c
+      uses: OneKeyHQ/onekey-github-actions/upload-artifact-firim@d4356424f081538756160b83781e46c1e3a20019
       id: firim
       with:
         api-token: ${{ secrets.FIRIM_TOKEN }}
-        upload-file-path: https://ugc-download.firqr.com/f07bf2d92148481fd78575939752a2821b63ac35?auth_key=1625880071-0-0-668477d9f97d8248adf341438dfa65b7
+        upload-file-path: ${{ steps.download-poetry.outputs.file-path }}
     - name: Print result
       run: echo artifact-download-url ${{ steps.firim.outputs.artifact-download-url }}
     - run: echo artifact-type ${{ steps.firim.outputs.artifact-type }}
