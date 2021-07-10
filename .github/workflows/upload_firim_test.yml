@@ -1,0 +1,27 @@
+name: Upload Firim Test
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Use upload firim
+    - id: firim
+      uses: OneKeyHQ/onekey-github-actions/upload-artifact-firim@13ff4523e739fe4e8dec664237a5a6905bf61ea6
+      with:
+        api-token: ${{ secrets.FIRIM_TOKEN }}
+        upload-file-path: https://ugc-download.firqr.com/f07bf2d92148481fd78575939752a2821b63ac35?auth_key=1625880071-0-0-668477d9f97d8248adf341438dfa65b7
+    - name: Print result
+    - run: echo artifact-download-url ${{ steps.firim.outputs.artifact-download-url }}
+    - run: echo artifact-type ${{ steps.firim.outputs.artifact-type }}
+    - run: echo artifact-bundle-id ${{ steps.firim.outputs.artifact-bundle-id }}
+    - run: echo artifact-version-code ${{ steps.firim.outputs.artifact-version-code }}
+    - run: echo artifact-version-name ${{ steps.firim.outputs.artifact-version-name }}
+    - run: echo artifact-name ${{ steps.firim.outputs.artifact-name }}
