@@ -19,7 +19,7 @@ jobs:
         file-url: 'https://ugc-download.firqr.com/89615ac01939aff8b724cb7e3c482aefcab10534.apk?auth_key=1625925203-0-0-cfbbee11785125201877ee152eb86929'
         file-name: '1.apk'
     - name: Use upload firim
-      uses: OneKeyHQ/onekey-github-actions/upload-artifact-firim@d4356424f081538756160b83781e46c1e3a20019
+      uses: OneKeyHQ/onekey-github-actions/upload-artifact-firim@5fa5e05b767aecbbf565bb45e16e77501e4eafd5
       id: firim
       with:
         api-token: ${{ secrets.FIRIM_TOKEN }}
