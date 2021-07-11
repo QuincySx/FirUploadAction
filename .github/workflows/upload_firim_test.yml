@@ -1,10 +1,15 @@
 name: Upload Firim Test
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  workflow_dispatch:
+    inputs:
+      download-url:
+        description: '下载链接'
+        required: true
+      test:
+        description: 'test'
+        required: false
+        default: 'The Octoverse'
 
 jobs:
   build:
@@ -16,10 +21,10 @@ jobs:
       uses: carlosperate/download-file-action@v1.0.3
       id: download-poetry
       with:
-        file-url: 'https://a985ebfa6e.cainiaoqr.com/6f766c536d25c113422bda11f437f2a6894f3b37.apk?auth_key=1625927399-0-0-bef258d0d39609401ab7e2747e89283d'
+        file-url: ${{ github.event.inputs.download-url }}
         file-name: '1.apk'
     - name: Use upload firim
-      uses: OneKeyHQ/onekey-github-actions/upload-artifact-firim@5fa5e05b767aecbbf565bb45e16e77501e4eafd5
+      uses: OneKeyHQ/onekey-github-actions/upload-artifact-firim@main
       id: firim
       with:
         api-token: ${{ secrets.FIRIM_TOKEN }}
@@ -32,3 +37,13 @@ jobs:
         echo artifact-version-code ${{ steps.firim.outputs.artifact-version-code }}
         echo artifact-version-name ${{ steps.firim.outputs.artifact-version-name }}
         echo artifact-name ${{ steps.firim.outputs.artifact-name }}
+    - name: Notice Slack App Update
+      uses: OneKeyHQ/onekey-github-actions/notice-slack-app-update@main
+      with:
+        web-hook-url: ${{ secrets.SLACK_WEBHOOK }}
+        artifact-download-url: ${{ steps.firim.outputs.artifact-download-url }}
+        artifact-type:  ${{ steps.firim.outputs.artifact-type }}
+        artifact-bundle-id:  ${{ steps.firim.outputs.artifact-bundle-id }}
+        artifact-version-code:  ${{ steps.firim.outputs.artifact-version-code }}
+        artifact-version-name:  ${{ steps.firim.outputs.artifact-version-name }}
+        artifact-name:  ${{ steps.firim.outputs.artifact-name }}
