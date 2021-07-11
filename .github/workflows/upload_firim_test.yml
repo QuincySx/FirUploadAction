@@ -18,8 +18,11 @@ jobs:
     
     steps:
     - name: set Test System env
+      id: custom_env
       run: |
         export CHANGE_LOG=`test`
+        echo '::set-output name=change_log::$REGTEST_APK'
+        
     - name: Download a file
       uses: carlosperate/download-file-action@v1.0.3
       id: download-poetry
@@ -50,4 +53,4 @@ jobs:
         artifact-version-code:  ${{ steps.firim.outputs.artifact-version-code }}
         artifact-version-name:  ${{ steps.firim.outputs.artifact-version-name }}
         artifact-name:  ${{ steps.firim.outputs.artifact-name }}
-        change-log: ${{ env.CHANGE_LOG }}
+        change-log: ${{ steps.custom_env.outputs.regtest_apk_path.change_log }}
