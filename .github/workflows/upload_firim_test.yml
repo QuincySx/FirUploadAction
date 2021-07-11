@@ -20,7 +20,7 @@ jobs:
     - name: set Test System env
       id: custom_env
       run: |
-        export CHANGE_LOG=`test`
+        export CHANGE_LOG='test'
         echo "::set-output name=change_log::$(echo $CHANGE_LOG)"
         
     - name: Download a file
