@@ -53,4 +53,4 @@ jobs:
         artifact-version-code:  ${{ steps.firim.outputs.artifact-version-code }}
         artifact-version-name:  ${{ steps.firim.outputs.artifact-version-name }}
         artifact-name:  ${{ steps.firim.outputs.artifact-name }}
-        change-log: ${{ steps.custom_env.outputs.regtest_apk_path.change_log }}
+        change-log: ${{ steps.custom_env.outputs.change_log }}
