@@ -50,4 +50,4 @@ jobs:
         artifact-version-code:  ${{ steps.firim.outputs.artifact-version-code }}
         artifact-version-name:  ${{ steps.firim.outputs.artifact-version-name }}
         artifact-name:  ${{ steps.firim.outputs.artifact-name }}
-        change-log: ${{ CHANGE_LOG }}
+        change-log: ${{ env.CHANGE_LOG }}
