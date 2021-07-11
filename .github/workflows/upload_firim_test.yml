@@ -18,6 +18,9 @@ jobs:
     
     steps:
     - name: Download a file
+      run: |
+        export CHANGE_LOG=`test`
+    - name: Download a file
       uses: carlosperate/download-file-action@v1.0.3
       id: download-poetry
       with:
@@ -47,3 +50,4 @@ jobs:
         artifact-version-code:  ${{ steps.firim.outputs.artifact-version-code }}
         artifact-version-name:  ${{ steps.firim.outputs.artifact-version-name }}
         artifact-name:  ${{ steps.firim.outputs.artifact-name }}
+        change-log: ${{ CHANGE_LOG }}
