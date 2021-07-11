@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Download a file
+    - name: set Test System env
       run: |
         export CHANGE_LOG=`test`
     - name: Download a file
