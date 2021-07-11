@@ -21,7 +21,7 @@ jobs:
       id: custom_env
       run: |
         export CHANGE_LOG=`test`
-        echo '::set-output name=change_log::$CHANGE_LOG'
+        echo '::set-output name=change_log::$(echo $CHANGE_LOG)'
         
     - name: Download a file
       uses: carlosperate/download-file-action@v1.0.3
