@@ -30,6 +30,7 @@ jobs:
       with:
         api-token: ${{ secrets.FIRIM_TOKEN }}
         upload-file-path: ./app-foretime-debug.apk
+        version-suffix: Alpha
     - name: Print result
       run: | 
         echo artifact-download-url ${{ steps.firim.outputs.artifact-download-url }}
