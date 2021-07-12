@@ -14,6 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'true'
+        
     - name: set Test System env
       id: custom_env
       run: |
