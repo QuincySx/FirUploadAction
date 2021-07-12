@@ -27,7 +27,7 @@ jobs:
       uses: carlosperate/download-file-action@v1.0.3
       id: download-poetry
       with:
-        file-url: 'app-foretime-debug.apk'
+        file-url: ${{ github.event.inputs.download-url }}
         file-name: '1.apk'
     - name: Use upload firim
       uses: OneKeyHQ/onekey-github-actions/upload-artifact-firim@main
