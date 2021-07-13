@@ -1,0 +1,37 @@
+name: pull request build
+
+on:
+  pull_request:
+    types: [ opened, ready_for_review, synchronize, reopened ]
+
+
+jobs:
+  # pull-request-build
+  pr_build:
+    runs-on: [ self-hosted, linux ]
+    steps:
+    
+      - name: Get PR Info Action
+        id: pr_info
+        uses: OneKeyHQ/onekey-github-actions/get-pr-info@main
+        
+      - name: Print result
+        run: | 
+          echo additions ${{ steps.firim.outputs.additions }}
+          echo deletions ${{ steps.pr_info.outputs.deletions }}
+          echo changed_files ${{ steps.pr_info.outputs.changed_files }}
+          echo commits ${{ steps.pr_info.outputs.commits }}
+          echo assignee ${{ steps.pr_info.outputs.assignee }}
+          echo number ${{ steps.pr_info.outputs.number }}
+          echo title ${{ steps.pr_info.outputs.title }}
+          echo body ${{ steps.pr_info.outputs.body }}
+          echo created_at ${{ steps.pr_info.outputs.created_at }}
+          echo updated_at ${{ steps.pr_info.outputs.updated_at }}
+          echo url ${{ steps.pr_info.outputs.url }}
+          echo base_branch ${{ steps.pr_info.outputs.base_branch }}
+          echo base_commit ${{ steps.pr_info.outputs.base_commit }}
+          echo head_branch ${{ steps.pr_info.outputs.head_branch }}
+          echo head_commit ${{ steps.pr_info.outputs.head_commit }}
+          echo draft ${{ steps.pr_info.outputs.draft }}
+          echo content_body ${{ steps.pr_info.outputs.content_body }}
+          echo issue ${{ steps.pr_info.outputs.issue }}
