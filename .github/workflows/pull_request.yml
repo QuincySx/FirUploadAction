@@ -8,7 +8,7 @@ on:
 jobs:
   # pull-request-build
   pr_build:
-    runs-on: [ self-hosted, linux ]
+    runs-on: ubuntu-latest
     steps:
     
       - name: Get PR Info Action
