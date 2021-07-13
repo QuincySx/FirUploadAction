@@ -57,3 +57,16 @@ jobs:
           echo draft ${{ steps.pr_info.outputs.draft }}
           echo content_body "${{ steps.pr_info.outputs.content_body }}"
           echo issue "${{ steps.pr_info.outputs.issue }}"
+
+      - name: Notice Slack App Update
+        uses: OneKeyHQ/onekey-github-actions/notice-slack-app-update@main
+        with:
+          web-hook-url: ${{ secrets.SLACK_WEBHOOK }}
+          artifact-download-url: "http://baidu.com"
+          artifact-type:  "ios"
+          artifact-bundle-id:  "test.xxx"
+          artifact-version-code:  "test"
+          artifact-version-name:  "test"
+          artifact-name:  "test"
+          change-log: "${{ steps.pr_info.outputs.content_body }}"
+          custom-issue-url: "${{ steps.pr_info.outputs.issue }}"
