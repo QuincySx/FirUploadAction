@@ -1,4 +1,4 @@
-name: Upload Firim Test
+name: Local Upload Firim Test
 
 on:
   workflow_dispatch:
@@ -17,7 +17,13 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: 'true'
-        
+    
+    - name: Get Recent Commit History
+      id: git_info
+      run: |
+        export COMMIT_HISTORY=`git log --pretty=format:“%s” -1`
+        echo "::set-output name=commit_history::$(echo COMMIT_HISTORY)"
+          
     - name: set Test System env
       id: custom_env
       run: |
@@ -39,6 +45,8 @@ jobs:
         echo artifact-version-code ${{ steps.firim.outputs.artifact-version-code }}
         echo artifact-version-name ${{ steps.firim.outputs.artifact-version-name }}
         echo artifact-name ${{ steps.firim.outputs.artifact-name }}
+        echo change-log ${{ steps.git_info.outputs.commit_history }}
+        
     - name: Notice Slack App Update
       uses: OneKeyHQ/onekey-github-actions/notice-slack-app-update@main
       with:
