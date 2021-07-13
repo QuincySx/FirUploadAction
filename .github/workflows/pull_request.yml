@@ -70,3 +70,17 @@ jobs:
           artifact-name:  "test"
           change-log: "${{ steps.pr_info.outputs.content_body }}"
           custom-issue-url: "${{ steps.pr_info.outputs.issue }}"
+
+
+      - name: Build Download Url Comment to PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: >-
+          github.event_name == 'pull_request'
+        with:
+          recreate: true
+          header: download url
+          message: |
+            MainNet: 
+            RegTest:
+            MainNet GooglePlay: ${{ steps.pr_info.outputs.title }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
