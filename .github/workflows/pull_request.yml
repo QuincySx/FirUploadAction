@@ -23,7 +23,7 @@ jobs:
           echo assignee ${{ steps.pr_info_1.outputs.assignee }}
           echo number ${{ steps.pr_info_1.outputs.number }}
           echo title ${{ steps.pr_info_1.outputs.title }}
-          echo body ${{ steps.pr_info_1.outputs.body }}
+          echo body "${{ steps.pr_info_1.outputs.body }}"
           echo created_at ${{ steps.pr_info_1.outputs.created_at }}
           echo updated_at ${{ steps.pr_info_1.outputs.updated_at }}
           echo url ${{ steps.pr_info_1.outputs.url }}
@@ -46,7 +46,7 @@ jobs:
           echo assignee ${{ steps.pr_info.outputs.assignee }}
           echo number ${{ steps.pr_info.outputs.number }}
           echo title ${{ steps.pr_info.outputs.title }}
-          echo body ${{ steps.pr_info.outputs.body }}
+          echo body "${{ steps.pr_info.outputs.body }}"
           echo created_at ${{ steps.pr_info.outputs.created_at }}
           echo updated_at ${{ steps.pr_info.outputs.updated_at }}
           echo url ${{ steps.pr_info.outputs.url }}
@@ -55,5 +55,5 @@ jobs:
           echo head_branch ${{ steps.pr_info.outputs.head_branch }}
           echo head_commit ${{ steps.pr_info.outputs.head_commit }}
           echo draft ${{ steps.pr_info.outputs.draft }}
-          echo content_body ${{ steps.pr_info.outputs.content_body }}
-          echo issue ${{ steps.pr_info.outputs.issue }}
+          echo content_body "${{ steps.pr_info.outputs.content_body }}"
+          echo issue "${{ steps.pr_info.outputs.issue }}"
