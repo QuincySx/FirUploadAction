@@ -22,7 +22,7 @@ jobs:
       id: git_info
       run: |
         export COMMIT_HISTORY=`git log --pretty=format:“%s” -1`
-        echo "::set-output name=commit_history::$(echo COMMIT_HISTORY)"
+        echo "::set-output name=commit_history::$(echo $COMMIT_HISTORY)"
           
     - name: set Test System env
       id: custom_env
