@@ -1,0 +1,42 @@
+name: Upload Firim Test3
+
+on:
+  workflow_dispatch:
+    inputs:
+      test:
+        description: 'test'
+        required: false
+        default: 'The Octoverse'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'true'
+        
+    - name: set Test System env
+      id: custom_env
+      run: |
+        export CHANGE_LOG='test'
+        echo "::set-output name=change_log::$(echo $CHANGE_LOG)"
+        
+    - name: Use upload firim
+      uses: OneKeyHQ/onekey-github-actions/upload-artifact-firim-notice@main
+      id: firim
+      with:
+        api-token: ${{ secrets.FIRIM_TOKEN }}
+        web-hook-url: ${{ secrets.SLACK_WEBHOOK }}
+        upload-file-path: ./app-foretime-debug.apk
+        version-suffix: Alpha
+    - name: Print result
+      run: | 
+        echo artifact-download-url ${{ steps.firim.outputs.artifact-download-url }}
+        echo artifact-type ${{ steps.firim.outputs.artifact-type }}
+        echo artifact-bundle-id ${{ steps.firim.outputs.artifact-bundle-id }}
+        echo artifact-version-code ${{ steps.firim.outputs.artifact-version-code }}
+        echo artifact-version-name ${{ steps.firim.outputs.artifact-version-name }}
+        echo artifact-name ${{ steps.firim.outputs.artifact-name }}
