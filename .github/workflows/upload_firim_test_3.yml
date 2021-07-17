@@ -3,10 +3,10 @@ name: Upload Firim Test3
 on:
   workflow_dispatch:
     inputs:
-      test:
+      changelog:
         description: 'test'
         required: false
-        default: 'The Octoverse'
+        default: 'Upload Test'
 
 jobs:
   build:
@@ -17,26 +17,41 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: 'true'
-        
-    - name: set Test System env
-      id: custom_env
-      run: |
-        export CHANGE_LOG='test'
-        echo "::set-output name=change_log::$(echo $CHANGE_LOG)"
-        
-    - name: Use upload firim
-      uses: OneKeyHQ/onekey-github-actions/upload-artifact-firim-notice@main
-      id: firim
+    
+    - name: install firim & ruby
+      uses: OneKeyHQ/onekey-github-actions/install-ruby-firim@main
+      
+    - name: Get artifacts info
+      uses: OneKeyHQ/onekey-github-actions/get-artifacts-info@main
+      id: artifacts_info
       with:
         api-token: ${{ secrets.FIRIM_TOKEN }}
-        web-hook-url: ${{ secrets.SLACK_WEBHOOK }}
         upload-file-path: ./app-foretime-debug.apk
         version-suffix: Alpha
+        
+    - name: Use upload firim
+      id: upload_info
+      run: |
+        fir login ${{ secrets.FIRIM_TOKEN }} -R -c "${{ github.event.inputs.changelog }}" --specify-app-display-name="${steps.artifacts_info.outputs.artifact-version-name}}"
+        egrep '(Published succeed: )\S+' grep_text.txt | egrep -o '(https?):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]'
+        
+    - name: Notice Slack App Update
+      uses: OneKeyHQ/onekey-github-actions/notice-slack-app-update@main
+      with:
+        web-hook-url: ${{ secrets.SLACK_WEBHOOK }}
+        artifact-download-url: ${{ steps.upload_info.outputs.artifact-download-url }}
+        artifact-type:  ${{ steps.artifact_info.outputs.artifact-type }}
+        artifact-bundle-id:  ${{ steps.artifact_info.outputs.artifact-bundle-id }}
+        artifact-version-code:  ${{ steps.artifact_info.outputs.artifact-version-code }}
+        artifact-version-name:  ${{ steps.artifact_info.outputs.artifact-version-name }}
+        artifact-name:  ${{ steps.artifact_info.outputs.artifact-name }}
+        change-log: ${{ github.event.inputs.changelog }}
+        
     - name: Print result
       run: | 
-        echo artifact-download-url ${{ steps.firim.outputs.artifact-download-url }}
-        echo artifact-type ${{ steps.firim.outputs.artifact-type }}
-        echo artifact-bundle-id ${{ steps.firim.outputs.artifact-bundle-id }}
-        echo artifact-version-code ${{ steps.firim.outputs.artifact-version-code }}
-        echo artifact-version-name ${{ steps.firim.outputs.artifact-version-name }}
-        echo artifact-name ${{ steps.firim.outputs.artifact-name }}
+        echo artifact-download-url ${{ steps.upload_info.outputs.artifact-download-url }}
+        echo artifact-type ${{ steps.artifact_info.outputs.artifact-type }}
+        echo artifact-bundle-id ${{ steps.artifact_info.outputs.artifact-bundle-id }}
+        echo artifact-version-code ${{ steps.artifact_info.outputs.artifact-version-code }}
+        echo artifact-version-name ${{ steps.artifact_info.outputs.artifact-version-name }}
+        echo artifact-name ${{ steps.artifact_info.outputs.artifact-name }}
