@@ -54,18 +54,18 @@ jobs:
       with:
         web-hook-url: ${{ secrets.SLACK_WEBHOOK }}
         artifact-download-url: ${{ steps.upload_info.outputs.download_url }}
-        artifact-type:  ${{ steps.artifact_info.outputs.artifact-type }}
-        artifact-bundle-id:  ${{ steps.artifact_info.outputs.artifact-bundle-id }}
-        artifact-version-code:  ${{ steps.artifact_info.outputs.artifact-version-code }}
-        artifact-version-name:  ${{ steps.artifact_info.outputs.artifact-version-name }}
-        artifact-name:  ${{ steps.artifact_info.outputs.artifact-name }}
+        artifact-type:  ${{ steps.artifacts_info.outputs.artifact-type }}
+        artifact-bundle-id:  ${{ steps.artifacts_info.outputs.artifact-bundle-id }}
+        artifact-version-code:  ${{ steps.artifacts_info.outputs.artifact-version-code }}
+        artifact-version-name:  ${{ steps.artifacts_info.outputs.artifact-version-name }}
+        artifact-name:  ${{ steps.artifacts_info.outputs.artifact-name }}
         change-log: ${{ github.event.inputs.changelog }}
         
     - name: Print result
       run: | 
         echo artifact-download-url ${{ steps.upload_info.outputs.download_url }}
-        echo artifact-type ${{ steps.artifact_info.outputs.artifact-type }}
-        echo artifact-bundle-id ${{ steps.artifact_info.outputs.artifact-bundle-id }}
-        echo artifact-version-code ${{ steps.artifact_info.outputs.artifact-version-code }}
-        echo artifact-version-name ${{ steps.artifact_info.outputs.artifact-version-name }}
-        echo artifact-name ${{ steps.artifact_info.outputs.artifact-name }}
+        echo artifact-type ${{ steps.artifacts_info.outputs.artifact-type }}
+        echo artifact-bundle-id ${{ steps.artifacts_info.outputs.artifact-bundle-id }}
+        echo artifact-version-code ${{ steps.artifacts_info.outputs.artifact-version-code }}
+        echo artifact-version-name ${{ steps.artifacts_info.outputs.artifact-version-name }}
+        echo artifact-name ${{ steps.artifacts_info.outputs.artifact-name }}
