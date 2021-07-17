@@ -36,7 +36,7 @@ jobs:
       id: artifacts_info
       with:
         api-token: ${{ secrets.FIRIM_TOKEN }}
-        upload-file-path: ./app-foretime-debug.apk
+        artifact-file-path: ./app-foretime-debug.apk
         version-suffix: Alpha
         
     - name: Use upload firim
