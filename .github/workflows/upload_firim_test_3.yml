@@ -51,7 +51,7 @@ jobs:
       uses: OneKeyHQ/onekey-github-actions/notice-slack-app-update@main
       with:
         web-hook-url: ${{ secrets.SLACK_WEBHOOK }}
-        artifact-download-url: ${{ steps.upload_info.outputs.download_url }}
+        artifact-download-url: ${{ steps.upload_info.outputs.artifact-download-url }}
         artifact-type:  ${{ steps.artifacts_info.outputs.artifact-type }}
         artifact-bundle-id:  ${{ steps.artifacts_info.outputs.artifact-bundle-id }}
         artifact-version-code:  ${{ steps.artifacts_info.outputs.artifact-version-code }}
@@ -61,7 +61,7 @@ jobs:
         
     - name: Print result
       run: | 
-        echo artifact-download-url ${{ steps.upload_info.outputs.download_url }}
+        echo artifact-download-url ${{ steps.upload_info.outputs.artifact-download-url }}
         echo artifact-type ${{ steps.artifacts_info.outputs.artifact-type }}
         echo artifact-bundle-id ${{ steps.artifacts_info.outputs.artifact-bundle-id }}
         echo artifact-version-code ${{ steps.artifacts_info.outputs.artifact-version-code }}
