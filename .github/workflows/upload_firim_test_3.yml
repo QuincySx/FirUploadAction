@@ -43,7 +43,7 @@ jobs:
       id: upload_info
       run: |
         fir login ${{ secrets.FIRIM_TOKEN }} -R -c "${{ github.event.inputs.changelog }}" --specify-app-display-name=${steps.artifacts_info.outputs.artifact-version-name}}
-        egrep '(Published succeed: )\S+' grep_text.txt | egrep -o '(https?):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]'
+      
         
     - name: Notice Slack App Update
       uses: OneKeyHQ/onekey-github-actions/notice-slack-app-update@main
