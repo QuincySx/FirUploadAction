@@ -18,8 +18,18 @@ jobs:
       with:
         submodules: 'true'
     
-    - name: install firim & ruby
-      uses: OneKeyHQ/onekey-github-actions/install-ruby-firim@main
+    - uses: actions/cache@v2
+      id: cache
+      with:
+        path: ~/local/rubies
+        key: ruby-2.6.5
+    - name: Setup Ruby, JRuby and TruffleRuby
+      uses: ruby/setup-ruby@v1.77.0
+      with:
+        ruby-version: 2.6.5
+        bundler-cache: true
+    - name: install fir.im
+      run: gem install fir-cli
       
     - name: Get artifacts info
       uses: OneKeyHQ/onekey-github-actions/get-artifacts-info@main
