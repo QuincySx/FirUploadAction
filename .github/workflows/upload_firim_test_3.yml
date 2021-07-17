@@ -40,14 +40,12 @@ jobs:
         version-suffix: Alpha
         
     - name: Use upload firim
+      uses: OneKeyHQ/onekey-github-actions/upload-artifact-firim@main
       id: upload_info
-      run: |
-        fir login ${{ secrets.FIRIM_TOKEN }} 
-        fir p ./app-foretime-debug.apk -R -c "${{ github.event.inputs.changelog }}" > upload_fir.log 2>&1
-        cat upload_fir.log
-        export DOWNLOAD_URL=$(egrep '(Published succeed: )\S+' upload_fir.log | egrep -o '(https?):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]')
-        echo $DOWNLOAD_URL
-        echo "::set-output name=download_url::$(echo $DOWNLOAD_URL)"
+      with:
+        api-token: ${{ secrets.FIRIM_TOKEN }}
+        upload-file-path: ./app-foretime-debug.apk
+        changelog: ${{ github.event.inputs.changelog }}
         
     - name: Notice Slack App Update
       uses: OneKeyHQ/onekey-github-actions/notice-slack-app-update@main
