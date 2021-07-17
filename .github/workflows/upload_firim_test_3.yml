@@ -46,12 +46,14 @@ jobs:
         fir p ./app-foretime-debug.apk -R -c "${{ github.event.inputs.changelog }}" > upload_fir.log 2>&1
         cat upload_fir.log
         export DOWNLOAD_URL=$(egrep '(Published succeed: )\S+' upload_fir.log | egrep -o '(https?):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]')
+        echo $DOWNLOAD_URL
+        echo "::set-output name=download_url::$(echo $DOWNLOAD_URL)"
         
     - name: Notice Slack App Update
       uses: OneKeyHQ/onekey-github-actions/notice-slack-app-update@main
       with:
         web-hook-url: ${{ secrets.SLACK_WEBHOOK }}
-        artifact-download-url: ${{ steps.upload_info.outputs.artifact-download-url }}
+        artifact-download-url: ${{ steps.upload_info.outputs.download_url }}
         artifact-type:  ${{ steps.artifact_info.outputs.artifact-type }}
         artifact-bundle-id:  ${{ steps.artifact_info.outputs.artifact-bundle-id }}
         artifact-version-code:  ${{ steps.artifact_info.outputs.artifact-version-code }}
@@ -61,7 +63,7 @@ jobs:
         
     - name: Print result
       run: | 
-        echo artifact-download-url ${{ steps.upload_info.outputs.artifact-download-url }}
+        echo artifact-download-url ${{ steps.upload_info.outputs.download_url }}
         echo artifact-type ${{ steps.artifact_info.outputs.artifact-type }}
         echo artifact-bundle-id ${{ steps.artifact_info.outputs.artifact-bundle-id }}
         echo artifact-version-code ${{ steps.artifact_info.outputs.artifact-version-code }}
