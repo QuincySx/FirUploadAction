@@ -45,7 +45,7 @@ jobs:
         fir login ${{ secrets.FIRIM_TOKEN }} 
         fir p ./app-foretime-debug.apk -R -c "${{ github.event.inputs.changelog }}" > upload_fir.log 2>&1
         cat upload_fir.log
-        export DOWNLOAD_URL=$(egrep '(Published succeed: )\S+' upload_fir.txt | egrep -o '(https?):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]')
+        export DOWNLOAD_URL=$(egrep '(Published succeed: )\S+' upload_fir.log | egrep -o '(https?):\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]')
         
     - name: Notice Slack App Update
       uses: OneKeyHQ/onekey-github-actions/notice-slack-app-update@main
