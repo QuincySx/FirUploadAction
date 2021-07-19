@@ -18,13 +18,18 @@ jobs:
       with:
         submodules: 'true'
     
+    - name: print runner
+      env:
+        RUNNER_CONTEXT: ${{ toJSON(runner) }}
+      run: echo "$RUNNER_CONTEXT"
+        
     - name: is self-hosted
-      if: runner.os == self-hosted
+      if: ${{ runner.os == self-hosted }}
       run: |
         echo "print self hosted"
         
     - name: not is self-hosted
-      if: runner.os != self-hosted
+      if: ${{ runner.os != self-hosted }}
       run: |
         echo "print is not self hosted"
         
