@@ -1,0 +1,56 @@
+name: Upload Firim Test3
+
+on:
+  workflow_dispatch:
+    inputs:
+      changelog:
+        description: 'test'
+        required: false
+        default: 'Upload Test'
+
+jobs:
+  build:
+
+    runs-on: self-hosted
+    
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: 'true'
+      
+    - name: Get artifacts info
+      uses: OneKeyHQ/onekey-github-actions/get-artifacts-info@main
+      id: artifacts_info
+      with:
+        api-token: ${{ secrets.FIRIM_TOKEN }}
+        artifact-file-path: ./app-foretime-debug.apk
+        version-suffix: Alpha
+        
+    - name: Use upload firim
+      uses: OneKeyHQ/onekey-github-actions/upload-artifact-firim@main
+      id: upload_info
+      with:
+        api-token: ${{ secrets.FIRIM_TOKEN }}
+        upload-file-path: ./app-foretime-debug.apk
+        changelog: ${{ github.event.inputs.changelog }}
+        
+    - name: Notice Slack App Update
+      uses: OneKeyHQ/onekey-github-actions/notice-slack-app-update@main
+      with:
+        web-hook-url: ${{ secrets.SLACK_WEBHOOK }}
+        artifact-download-url: ${{ steps.upload_info.outputs.artifact-download-url }}
+        artifact-type:  ${{ steps.artifacts_info.outputs.artifact-type }}
+        artifact-bundle-id:  ${{ steps.artifacts_info.outputs.artifact-bundle-id }}
+        artifact-version-code:  ${{ steps.artifacts_info.outputs.artifact-version-code }}
+        artifact-version-name:  ${{ steps.artifacts_info.outputs.artifact-version-name }}
+        artifact-name:  ${{ steps.artifacts_info.outputs.artifact-name }}
+        change-log: ${{ github.event.inputs.changelog }}
+        
+    - name: Print result
+      run: | 
+        echo artifact-download-url ${{ steps.upload_info.outputs.artifact-download-url }}
+        echo artifact-type ${{ steps.artifacts_info.outputs.artifact-type }}
+        echo artifact-bundle-id ${{ steps.artifacts_info.outputs.artifact-bundle-id }}
+        echo artifact-version-code ${{ steps.artifacts_info.outputs.artifact-version-code }}
+        echo artifact-version-name ${{ steps.artifacts_info.outputs.artifact-version-name }}
+        echo artifact-name ${{ steps.artifacts_info.outputs.artifact-name }}
