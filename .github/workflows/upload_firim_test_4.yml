@@ -17,7 +17,12 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: 'true'
-      
+    
+    - name: is self-hosted
+      if: runs-on != self-hosted
+      run: |
+        echo "print self hosted"
+        
     - name: Get artifacts info
       uses: OneKeyHQ/onekey-github-actions/get-artifacts-info@main
       id: artifacts_info
