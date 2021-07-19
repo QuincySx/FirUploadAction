@@ -19,9 +19,14 @@ jobs:
         submodules: 'true'
     
     - name: is self-hosted
-      if: runs-on != self-hosted
+      if: runner.os == self-hosted
       run: |
         echo "print self hosted"
+        
+    - name: not is self-hosted
+      if: runner.os != self-hosted
+      run: |
+        echo "print is not self hosted"
         
     - name: Get artifacts info
       uses: OneKeyHQ/onekey-github-actions/get-artifacts-info@main
