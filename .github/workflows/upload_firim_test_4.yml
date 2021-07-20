@@ -23,6 +23,12 @@ jobs:
       run: |
         echo "print self hosted"
         
+    - name: is host
+      if: ${{ env.IS_SELF_HOSTED == true }}
+      run: |
+        echo print JAVA_HOME: $JAVA_HOME
+        echo print ANDROID_SDK_ROOT: $ANDROID_SDK_ROOT
+        
     - name: not is self-hosted
       if: ${{ env.IS_SELF_HOSTED == false }}
       run: |
