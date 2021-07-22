@@ -20,7 +20,7 @@ jobs:
         
     - name: test
       run: |
-        pwd
+        echo `pwd`
         export COMMIT_COUNT=`git rev-list HEAD --count`
         echo "COMMIT_COUNT=$COMMIT_COUNT" >> $GITHUB_ENV
         echo "test=123456" >> $GITHUB_ENV
