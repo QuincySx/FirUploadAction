@@ -20,9 +20,15 @@ jobs:
         
     - name: test
       run: |
+        pwd
         export COMMIT_COUNT=`git rev-list HEAD --count`
         echo "COMMIT_COUNT=$COMMIT_COUNT" >> $GITHUB_ENV
-        echo env "${{ env.COMMIT_COUNT }}"
+        echo "test=123456" >> $GITHUB_ENV
+        
+    - name: test
+      run: |
+        echo env COMMIT_COUNT "${{ env.COMMIT_COUNT }}"
+        echo env test "${{ env.test }}"
         
     - name: Get artifacts info
       uses: OneKeyHQ/onekey-github-actions/get-artifacts-info@main
