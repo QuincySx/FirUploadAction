@@ -31,11 +31,9 @@ jobs:
           {
             text: "Code Review",
             attachments: [{
-              "author_name": "${process.env.AS_AUTHOR}",
-              fallback: 'fallback',
               color: '00B812',
               title: 'Code Review',
-              text: '${process.env.AS_AUTHOR} 提交了 ${{ steps.pr_info.outputs.title }}\n${{ steps.pr_info.outputs.content_body }}\n 快来 Review Code ${{ steps.pr_info.outputs.url }}'
+              text: `${process.env.AS_AUTHOR} 提交了 ${{ steps.pr_info.outputs.title }}\n${{ steps.pr_info.outputs.content_body }}\n 快来 Review Code ${{ steps.pr_info.outputs.url }}`
             }]
           }
       env:
