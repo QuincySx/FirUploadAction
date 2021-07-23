@@ -10,21 +10,43 @@ jobs:
   pr_build:
     runs-on: ubuntu-latest
     steps:
-    
+      - name: Get PR Info Action
+        id: pr_info_1
+        uses: Brymastr/pr-info-action@v1
+        
+      - name: Print result
+        run: | 
+          echo additions ${{ steps.pr_info_1.outputs.additions }}
+          echo deletions ${{ steps.pr_info_1.outputs.deletions }}
+          echo changed_files ${{ steps.pr_info_1.outputs.changed_files }}
+          echo commits ${{ steps.pr_info_1.outputs.commits }}
+          echo assignee ${{ steps.pr_info_1.outputs.assignee }}
+          echo number ${{ steps.pr_info_1.outputs.number }}
+          echo title ${{ steps.pr_info_1.outputs.title }}
+          echo body "${{ steps.pr_info_1.outputs.body }}"
+          echo created_at ${{ steps.pr_info_1.outputs.created_at }}
+          echo updated_at ${{ steps.pr_info_1.outputs.updated_at }}
+          echo url ${{ steps.pr_info_1.outputs.url }}
+          echo base_branch ${{ steps.pr_info_1.outputs.base_branch }}
+          echo base_commit ${{ steps.pr_info_1.outputs.base_commit }}
+          echo head_branch ${{ steps.pr_info_1.outputs.head_branch }}
+          echo head_commit ${{ steps.pr_info_1.outputs.head_commit }}
+          echo draft ${{ steps.pr_info_1.outputs.draft }}
+        
       - name: Get PR Info Action
         id: pr_info
         uses: OneKeyHQ/onekey-github-actions/get-pr-info@main
         
-      - name: Print result
+      - name: Print result custom
         run: | 
-          echo additions ${{ steps.firim.outputs.additions }}
+          echo additions ${{ steps.pr_info.outputs.additions }}
           echo deletions ${{ steps.pr_info.outputs.deletions }}
           echo changed_files ${{ steps.pr_info.outputs.changed_files }}
           echo commits ${{ steps.pr_info.outputs.commits }}
           echo assignee ${{ steps.pr_info.outputs.assignee }}
           echo number ${{ steps.pr_info.outputs.number }}
           echo title ${{ steps.pr_info.outputs.title }}
-          echo body ${{ steps.pr_info.outputs.body }}
+          echo body "${{ steps.pr_info.outputs.body }}"
           echo created_at ${{ steps.pr_info.outputs.created_at }}
           echo updated_at ${{ steps.pr_info.outputs.updated_at }}
           echo url ${{ steps.pr_info.outputs.url }}
@@ -33,5 +55,32 @@ jobs:
           echo head_branch ${{ steps.pr_info.outputs.head_branch }}
           echo head_commit ${{ steps.pr_info.outputs.head_commit }}
           echo draft ${{ steps.pr_info.outputs.draft }}
-          echo content_body ${{ steps.pr_info.outputs.content_body }}
-          echo issue ${{ steps.pr_info.outputs.issue }}
+          echo content_body "${{ steps.pr_info.outputs.content_body }}"
+          echo issue "${{ steps.pr_info.outputs.issue }}"
+
+      - name: Notice Slack App Update
+        uses: OneKeyHQ/onekey-github-actions/notice-slack-app-update@main
+        with:
+          web-hook-url: ${{ secrets.SLACK_WEBHOOK }}
+          artifact-download-url: "http://baidu.com"
+          artifact-type:  "ios"
+          artifact-bundle-id:  "test.xxx"
+          artifact-version-code:  "test"
+          artifact-version-name:  "test"
+          artifact-name:  "test"
+          change-log: "${{ steps.pr_info.outputs.content_body }}"
+          custom-issue-url: "${{ steps.pr_info.outputs.issue }}"
+
+
+      - name: Build Download Url Comment to PR
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: >-
+          github.event_name == 'pull_request'
+        with:
+          recreate: true
+          header: download url
+          message: |
+            MainNet: 
+            RegTest:
+            MainNet GooglePlay: ${{ steps.pr_info.outputs.title }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
